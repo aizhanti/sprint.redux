@@ -50,21 +50,25 @@ const initialProjects = [
 const testWelcome = async () => {
   console.info("GET /api");
   const response = await req(endPoint);
+  console.log("testWelcome", response, endPoint);
   expect(response.status).to.equal(200);
 };
 
 const getJson = async (url, options) => {
+  console.log("options:", options);
+  console.log("url:", url);
   const response = await req(url, options);
   return response.json();
 };
 
 const testInsert = async () => {
-  console.info("GET /api/projects");
+  console.info("GET /api/projects NEW");
   expect(await getJson(projEndPoint)).to.eql({ projects: [] });
   console.info("POST /api/projects");
   // Note that normally you would map the promises and use Promise.All, but for testing purposes we need the order
   // You should never await in a for loop, as that is basically forcing sync execution.
   insertedProjects = [];
+  console.log(initialProjects);
   for (let i = 0; i < initialProjects.length; i++) {
     const project = initialProjects[i];
     const insertedProject = await getJson(projEndPoint, {
@@ -72,6 +76,7 @@ const testInsert = async () => {
       body: JSON.stringify(project),
     });
     insertedProjects.push(insertedProject);
+    console.log("insertedProjects:", insertedProjects);
   }
 
   const expected = { projects: [...initialProjects] };

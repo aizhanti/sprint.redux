@@ -1,15 +1,21 @@
 const router = require("express").Router();
 const builds = require("./builds");
+const store = require("../../../redux/redux");
 
 router.get("/", (req, res) => {
-  // TODO retrieve and send all projects
-  res.status(418).json({ message: "Not Implemented" });
+  const projects = store.dispatch({ type: "GET" });
+  console.log("router.get/GET: projects:", projects);
+  return res.send(projects);
 });
 
 router.post("/", (req, res) => {
   const { project } = req.body;
+  console.log("project:", project);
+  // return res.status(201).json(project);
   // TODO Add new project, give it an id and send it back.
-  res.status(418).json({ message: "Not Implemented" });
+  // .res
+  //   .status(418)
+  //   .json({ message: "Not Implemented" })
 });
 
 router.get("/:projectId", (req, res) => {
