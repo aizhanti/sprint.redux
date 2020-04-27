@@ -2,7 +2,6 @@ const router = require("express").Router({ mergeParams: true });
 
 router.get("/", (req, res) => {
   const { projectId } = req.params;
-  console.log("req.params:", req.params);
   // TODO Get and return all builds of given project
   res.status(418).json({ message: "Not Implemented" });
 });

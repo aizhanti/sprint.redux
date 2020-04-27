@@ -2,21 +2,32 @@ const { createStore } = require("redux");
 const initialState = { projects: [] };
 
 const reducer = (state = initialState, action) => {
-  switch (action.type) {
+  switch ((action.type, action.payload)) {
     case "POST":
-      console.log("POST", state);
-      return { ...state, projects: state.projects.push({ id: 1 }) };
+      return { ...state, projects: [...state.projects, action.payload] };
     case "PATCH":
       return state;
     case "PUT":
       return state;
     case "DELETE":
       return state;
+    case "GET":
+      if (action.payload) {
+        for (const project of state.projects) {
+          console.log('project:', project)
+          if (project.id === action.payload) {
+            return project;
+          }
+        }
+      }
+      return state;
     default:
-      console.log("state", state);
       return state;
   }
 };
 
 const store = createStore(reducer);
+
+// reducer();
+
 module.exports = store;
