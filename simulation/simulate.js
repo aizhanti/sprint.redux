@@ -67,6 +67,7 @@ const testInsert = async () => {
   insertedProjects = [];
   for (let i = 0; i < initialProjects.length; i++) {
     const project = initialProjects[i];
+    console.log();
     const insertedProject = await getJson(projEndPoint, {
       method: "POST",
       body: JSON.stringify(project),
@@ -89,8 +90,10 @@ const testInitialProjects = async () => {
   const projects = await Promise.all(
     // initialProjects.map((proj, index) => getJson(projUrl(index)))
     initialProjects.map((proj, index) => {
-      console.log("SIM proj", proj, index);
-      getJson(projUrl(index));
+      console.log("index:", index);
+      // console.log("SIM proj", proj, index);
+      console.log("projurl", projUrl(index));
+      return getJson(projUrl(index));
     })
   );
   for (let i = 0; i < projects.length; i += 1) {

@@ -7,19 +7,20 @@ router.get("/", (req, res) => {
   store.dispatch({ type: "GET" });
   const projects = store.getState();
   console.log("router.get/GET: projects:", projects);
-  return res.send(JSON.stringify(projects));
+  return res.send(projects);
 });
 
 router.post("/", (req, res) => {
   const { project } = req.body;
-  const result = store.dispatch({ type: "POST", payload: project });
+  console.log("project payload", project);
+  const result = store.dispatch({ type: req.method, payload: project });
   return res.send(result);
 });
 
 router.get("/:projectId", (req, res) => {
-  const { projectId } = req.params;
-  // TODO retrieve and send project with given id
+  const { projectId } = req.params.projectId;
   console.log("projectId", projectId, req.params);
+  // TODO retrieve and send project with given id
   const result = store.dispatch({ type: "GET", payload: projectId });
 
   return res.send(result);
